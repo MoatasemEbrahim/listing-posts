@@ -31,18 +31,19 @@ const Post:FC = () => {
         setLoading(false)
       }
     })()
-  },[])
+  },[id,posts])
 
   const handleDelete = useCallback( postId => e =>{
     const newPosts = posts.filter(post => post.id !== parseInt(postId));
     dispatch(fetchingPostsSucceed(newPosts))
     push('/')
-  },[push,dispatch])
+  },[push,dispatch,posts])
 
   if(loading) return <p>Loading...</p>
 
   return (
     <div className={styles.post}>
+      <button className={styles.btn} type="button" onClick={()=>push('/')}>&#171; Back</button>
       <h2>{post.title}</h2>
       <p>{post.body}</p>
       <button className={styles.btn} type="button" onClick={handleDelete(id)}>Delete post</button>

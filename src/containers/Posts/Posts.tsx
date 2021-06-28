@@ -5,6 +5,7 @@ import { fetchPosts, fetchingPostsSucceed,fetchingPostsFailed } from '../../redu
 import {RootState} from '../../redux/reducers';
 import PostCard from '../../components/shared/PostCard/PostCard';
 import styles from './Posts.module.scss';
+import { useCallback } from 'react';
 
 const Posts:FC = () => {
   const {posts,loading,error} = useSelector((state:RootState) => state.postsData)
@@ -21,19 +22,28 @@ const Posts:FC = () => {
         dispatch(fetchingPostsFailed(error.message))
       }
     })()
-  },[])
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[dispatch])
+
+  const handleShuffleData = useCallback(oldPosts => e =>{
+    dispatch(fetchPosts());
+    const shuffledPosts = oldPosts.sort(() => Math.random() - 0.5);
+    dispatch(fetchingPostsSucceed(shuffledPosts))
+  },[dispatch])
 
   return (
-    <>
+    <div className={styles.container}>
       <h2 className={styles.title}>Posts</h2>
+      <button className={styles.btn} type="button" onClick={handleShuffleData(posts)}>Shuffle posts</button>
       {loading 
       ? <p>Loading ...</p> 
-      : <div className={styles.container}>
-          {posts.map(({id,title,body})=> <PostCard id={id} title={title} body={body} />)}
+      : <div className={styles.posts}>
+          {posts.map(({id,title,body})=> <PostCard key={id} id={id} title={title} body={body} />)}
         </div>
       }
       {error && <p>{error}</p>}
-    </>
+    </div>
   )
 }
 
