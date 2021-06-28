@@ -16,7 +16,7 @@ const postsListReducer:Reducer = (state = initialState.postsData, action) => {
       return { loading: false, posts: action.payload };
 
     case POSTS_LIST_FAIL:
-      return { loading: false, error: action.payload };
+      return { loading: false, posts:[] ,error: action.payload };
 
     default:
       return state;

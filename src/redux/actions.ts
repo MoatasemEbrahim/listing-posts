@@ -4,7 +4,7 @@ import {
   POSTS_LIST_FAIL,
 } from './constants';
 
-const createAction = type => payload => ({
+const createAction = (type:string) => (payload?:unknown) => ({
   type,
   payload,
 });
