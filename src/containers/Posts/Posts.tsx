@@ -11,11 +11,11 @@ const Posts:FC = () => {
   const dispatch = useDispatch();
 
   useEffect(()=>{
+    if(posts.length > 0) return;
     (async()=>{
       try {
         dispatch(fetchPosts());
         const data = await postsAPI.getPosts();
-        console.log(data)
         dispatch(fetchingPostsSucceed(data))
       } catch (error) {
         dispatch(fetchingPostsFailed(error.message))
