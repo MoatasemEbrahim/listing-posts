@@ -35,7 +35,14 @@ const Posts:FC = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Posts</h2>
-      <button className={styles.btn} type="button" onClick={handleShuffleData(posts)}>Shuffle posts</button>
+      <button 
+        data-testid="ShufflePostsBtn" 
+        className={styles.btn} 
+        type="button" 
+        onClick={handleShuffleData(posts)}
+      >
+        Shuffle posts
+      </button>
       {loading 
       ? <p>Loading ...</p> 
       : <div className={styles.posts}>
